@@ -1,0 +1,101 @@
+/*visiteurscss*/
+
+/* Custom CSS */
+body {
+    background-color: #f8f9fa;
+}
+ /* Carousel Fullscreen */
+ .carousel-item img {
+    object-fit: cover;
+    height: 300px; /* Hauteur fixe pour le carousel */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Ajoute un voile sombre */
+}
+
+.search-bar {
+    margin: 2rem auto;
+    max-width: 700px;
+}
+
+.filter-buttons .btn {
+    margin-right: 10px;
+}
+
+.card {
+    margin: 1rem 0;
+}
+
+.btn-read {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+.btn-download {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.btn-read:hover,
+.btn-download:hover {
+    opacity: 0.9;
+}
+.card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Style général pour le header */
+.header {
+    display: flex; /* Utilise flexbox pour aligner les éléments */
+    justify-content: space-between; /* Espacement entre les éléments */
+    align-items: center; /* Centre verticalement les éléments */
+    padding: 10px 20px;
+    background-color: #2c3e50; /* Couleur de fond du header */
+    color: white;
+}
+
+/* Style pour le titre */
+.header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* Style pour le bouton */
+.header .btn1 {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: white;
+    color: #007bff;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.header .btn1:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Style pour le lien dans le bouton */
+.header .btn1 a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}

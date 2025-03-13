@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Publications</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="asset/css/style.css" rel="stylesheet">
+    <style>
+        /* Style global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+}
+
+
+/* Contenu principal */
+.content {
+    margin-left: 125px;
+    margin-right: 70px;
+    margin-top: 10px;
+    padding: 10px;
+    flex: 1;
+    background-color: #ffffff;
+    min-height: 100vh;
+    width: 800px;
+    position:fixed;
+}
+
+
+
+
+/* Titre principal */
+.content h1 {
+    font-size: 28px;
+    color: #2d3436;
+    margin-bottom: 20px;
+}
+
+/* Menu de filtrage */
+.menu-filtrage {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+.menu-filtrage h3 {
+    font-size: 20px;
+    color: #2d3436;
+    margin-bottom: 10px;
+}
+
+.menu-filtrage ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-filtrage li {
+    margin: 10px 0;
+}
+
+.menu-filtrage a {
+    color: #00b894;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.menu-filtrage a:hover {
+    text-decoration: underline;
+}
+
+/* Section des publications */
+.publications-list {
+    display: none;
+    margin-top: 20px;
+}
+
+.publications-list h4 {
+    font-size: 24px;
+    color: #2d3436;
+    margin-bottom: 20px;
+}
+
+.publications-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.publications-list li {
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.publications-list li:hover {
+    background-color: #ecf0f1;
+}
+
+
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}
+
+      </style>
+</head>
+<body>
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+        <h4 class="text-center mb-4">Menu</h4>
+        <a href="#" class="active"><i class="bi bi-house"></i> Dahboard</a>
+        <div class="dropdown">
+            <a href="#" class="mainmenubtn"><i class="bi bi-file-earmark-text"></i>Publications</a>
+            <div class="dropdown-child">
+              <a href="ajouter-publication.html">Ajouter Publication</a>
+             <a href="liste-publication-soumise.html">Liste Publications Soumises</a>
+              <a href="liste-publication-valide.html">Liste Publications Validées</a>
+              <a href="liste-publication-revision.html">Liste Publications en Révision</a>
+            </div>
+        </div>
+        <a href="#"><i class="bi bi-gear"></i> Paramètres</a>
+        <a href="#"><i class="bi bi-person"></i> Profil</a>
+        <div class="mt-auto text-center">
+            <hr class="text-light">
+            <a href="#" id="logout-link"   class="text-danger"><i class="bi bi-box-arrow-left">
+            </i> Déconnexion</a>
+            <script>
+                // Déconnexion
+                document.getElementById("logout-link").addEventListener("click", function () {
+                    localStorage.removeItem("token"); // Supprimer le token
+                    localStorage.removeItem("role");  // Supprimer le rôle
+                    window.location.href = "login.html"; // Rediriger vers la page de connexion
+                });
+            </script>
+        </div>
+    </div>
+            
+        <!-- Contenu principal -->
+        <div class="content">
+            <h1>Gestion des Publications</h1>
+
+            <!-- Menu pour filtrer les publications -->
+            <div class="menu-filtrage">
+                <h3>Filtrer par statut</h3>
+                <ul>
+                    <li><a href="#valides" class="filter-btn" onclick="filterPublications('valides')">Publications Validées</a></li>
+                    <li><a href="#en-revision" class="filter-btn" onclick="filterPublications('en-revision')">En cours de révision</a></li>
+                    <li><a href="#revision-terminee" class="filter-btn" onclick="filterPublications('revision-terminee')">Révision Terminée</a></li>
+                </ul>
+            </div>
+
+            <!-- Liste des publications selon le filtre -->
+            <div id="valides" class="publications-list" style="display: none;">
+                <h4>Publications Validées</h4>
+                <!-- Liste des publications validées ici -->
+            </div>
+            <div id="en-revision" class="publications-list" style="display: none;">
+                <h4>Publications en Cours de Révision</h4>
+                <!-- Liste des publications en révision ici -->
+            </div>
+            <div id="revision-terminee" class="publications-list" style="display: none;">
+                <h4>Publications Révision Terminée</h4>
+                <!-- Liste des publications révision terminée ici -->
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Script JavaScript pour filtrer les publications -->
+    <script>
+        function filterPublications(status) {
+            // Masquer toutes les listes
+            const lists = document.querySelectorAll('.publications-list');
+            lists.forEach(list => {
+                list.style.display = 'none';
+            });
+
+            // Afficher la liste correspondant au statut
+            const selectedList = document.getElementById(status);
+            if (selectedList) {
+                selectedList.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

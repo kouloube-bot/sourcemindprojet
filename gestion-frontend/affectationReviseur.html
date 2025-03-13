@@ -1,0 +1,13 @@
+<!-- Modale pour Affecter un Réviseur -->
+<div id="affecterModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); z-index: 1000;">
+    <h4>Affecter un Réviseur</h4>
+    <label for="reviseur-select">Sélectionnez un Réviseur :</label>
+    <select id="reviseur-select">
+        <option value="" disabled selected>Choisissez un réviseur</option>
+    </select>
+    <div style="margin-top: 15px;">
+        <button id="affecter-confirm-btn" class="btn btn-primary">Confirmer</button>
+        <button id="affecter-cancel-btn" class="btn btn-secondary">Annuler</button>
+    </div>
+</div>
+<div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;"></div>

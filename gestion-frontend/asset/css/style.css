@@ -1,0 +1,1050 @@
+/* Global Settings */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    margin: 20px auto;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    color: #fff;
+    overflow-y: auto;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: #adb5bd;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background-color: #495057;
+    color: #fff;
+}
+
+.sidebar h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+/* Topbar */
+
+.topbar h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.topbar .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.topbar .user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 250px;
+    margin-top: 60px;
+    padding: 20px;
+    background-color: #f4f7fc;
+    min-height: calc(100vh - 60px);
+}
+
+/* Cards */
+.card {
+    background-color: rgb(240, 235, 235);
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+.card p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+table th,
+table td {
+    padding: 10px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #007bff;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 250px;
+    width: calc(100% - 250px);
+}
+
+
+.main-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px; /* Espacement vertical entre les cartes */
+    margin-left: 250px;
+    margin-top: 60px;
+    padding: 20px;
+}
+@media (max-width: 768px) {
+    .card {
+        margin: 0 auto; /* Centre les cartes */
+        width: 90%; /* Réduit leur largeur */
+    }
+}
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Légère élévation */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+/*aceuil*/
+/* Réinitialisation générale */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corps de la page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+}
+
+/* Header */
+header {
+    background-color: rgba(0, 123, 255, 0.7);
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .logo a {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+nav .nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+nav .nav-links li {
+    list-style: none;
+}
+
+nav .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px 10px;
+}
+
+nav .nav-links a:hover {
+    background-color: #0056b3;
+    border-radius: 4px;
+}
+
+/* Contenu Principal */
+.content {
+    margin-top: 60px; /* Pour compenser l'en-tête fixe */
+    padding: 20px;
+    background-color: #fff;
+    min-height: 80vh;
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Publier une animation pour le fond */
+.content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/asset/image/téléchargement.jpeg'); /* Ajoutez ici le lien de l'image */
+    background-size: cover;
+    background-position: center;
+    animation: backgroundMove 30s linear infinite;
+    z-index: -1;
+}
+
+/* Animation du mouvement de fond */
+@keyframes backgroundMove {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+/* Liste des publications */
+.publication-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Carte de publication */
+.publication-card {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.publication-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.publication-card h3 {
+    margin-bottom: 10px;
+}
+
+.publication-author {
+    color: #007bff;
+}
+
+.publication-summary {
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+footer .social-links {
+    margin-top: 10px;
+}
+
+footer .social-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 18px;
+}
+
+footer .social-links a:hover {
+    text-decoration: underline;
+}
+
+/* Animation Fade In */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Réactivité */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .publication-list {
+        grid-template-columns: 1fr;
+    }
+
+    footer {
+        padding: 15px;
+    }
+}
+/*ajouterchercheurcss*/
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.containerchr {
+    margin: 50px auto;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+/*menu css*/
+/* Global Settings */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fc;
+}
+
+/* Container for the whole page */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar Styles */
+
+.sidebar {
+    width: 250px;
+    background-color: #343a40;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    top: 0;
+}
+
+.sidebar a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar a:hover, .sidebar a.active {
+    background-color: #495057;
+    border-left: 4px solid #0d6efd;
+    color: #ffffff;
+}
+
+.sidebar i {
+    margin-right: 10px;
+}
+
+/* Main Content */
+.main-content {
+    margin: auto;
+    width: 100%;
+    padding: 20px;
+    background-color: #f4f7fc;
+    justify-content:center ;
+}
+
+.topbar .username {
+    margin-right: 1rem;
+}
+
+.topbar button {
+    border: none;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+
+
+.topbar .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.topbar #logout-btn {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.topbar #logout-btn:hover {
+    background-color: #a71d2a;
+}
+
+.page-content {
+    margin-top: 70px; /* To account for the fixed topbar */
+}
+
+h1 {
+    color: #007bff;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
+
+   
+
+    .topbar {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+.containerda {
+    display: flex;
+    margin: 20px auto;
+    max-width: 1200px;
+    padding: 20px;;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+.container-departement {
+    margin: 50px auto;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+.department-um {
+justify-content: center;
+}  
+
+/* Styles pour textarea */
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    resize: vertical; /* Permet le redimensionnement uniquement vertical */
+    min-height: 120px; /* Hauteur minimale */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea:focus {
+    border-color: #007bff; /* Couleur de la bordure lors du focus */
+    outline: none; /* Supprime la bordure par défaut du navigateur */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Effet ombré */
+}
+
+textarea::placeholder {
+    color: #aaa; /* Couleur du texte indicatif */
+    font-style: italic;
+}
+
+/* Pour intégrer le textarea dans une structure de formulaire */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/*listedepartement*/
+/* Conteneur de la liste */
+.containerdpr {
+    margin: 30px auto;
+    max-width: 900px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Titre */
+.containerdpr h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+/* Table */
+.table-departements {
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-departements th, 
+.table-departements td {
+   
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    padding: 10px;
+}
+
+.table-departements th {
+    background-color: #007bff;
+    color: #fff;
+    
+}
+
+
+#table-departements tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#table-departements tbody tr:hover {
+    background-color: #ddd;
+}
+.table-departements tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table-departements td {
+    color: #333;
+    font-size: 14px;
+}
+
+/* Responsive design pour table */
+@media (max-width: 768px) {
+    .table-departements .role-table  .user-table{
+        display: block;
+        overflow-x: auto;
+    }
+}
+/* Styles pour les messages */
+#message .alert {
+    font-size: 1rem;
+    padding: 10px;
+    margin-top: 10px;
+}
+/* Styles pour le tableau */
+
+
+#role-table th,
+#role-table td {
+    text-align: center;
+    padding: 10px;
+}
+
+#role-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+#role-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#role-table tbody tr:hover {
+    background-color: #ddd;
+}
+#role-table {
+    width: 100%;
+    overflow: hidden;
+    margin-left: auto;
+}
+/* Styles pour les messages */
+#message .alert {
+    font-size: 1rem;
+    padding: 10px;
+    margin-top: 10px;
+}
+.containerRol {
+    margin: 50px auto;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    
+}
+
+/* Titre */
+.containerRol h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+/*listeusercss*/
+#user-table th,
+#user-table td {
+    text-align: center;
+    padding: 10px;
+}
+
+#user-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+#user-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#user-table tbody tr:hover {
+    background-color: #ddd;
+}
+#user-table {
+    width: 100%;
+    overflow: hidden;
+    margin-left: auto;
+}
+/* Styles pour les messages */
+#message .alert {
+    font-size: 1rem;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+
+/* Titre */
+.containerUser h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+@media (max-width: 768px) {
+ .user-table{
+        display: block;
+        overflow-x: auto;
+    }
+}
+/* Conteneur du tableau */
+.table-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px; 
+    background-color: #f8f9fa; 
+}
+
+/* Styles pour le tableau */
+#chercheur-table {
+    border-collapse: collapse; 
+    width: 80%; 
+    max-width: 1000px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 8px; 
+    overflow: hidden; 
+    background-color: white; 
+    margin: 0 auto;
+}
+
+/* En-têtes */
+#chercheur-table th {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* Corps du tableau */
+#chercheur-table td {
+    text-align: center;
+    padding: 12px;
+    font-size: 1rem;
+}
+
+/* Alternance des couleurs pour les lignes */
+#chercheur-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Effet survol */
+#chercheur-table tbody tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+/* Style des alertes */
+#message .alert {
+    font-size: 1rem;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+    .table-container {
+        padding: 10px;
+    }
+    #chercheur-table {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+    #chercheur-table th, #chercheur-table td {
+        padding: 8px;
+    }
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+    font-size: 1rem;
+}
+
+.pagination .page-link {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.pagination .page-link.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+    text-decoration: none;
+}
+
+.pagination #current-page {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/*le tableau et contenair*/
+
+.containerUser {
+    position: absolute; /* Position absolue pour positionner par rapport au parent */
+    top: 80px; /* Place le conteneur en dessous de la topbar */
+    left: 250px; /* Aligne le conteneur après la largeur de la sidebar */
+    width: 1000px;
+    padding: 20px; /* Espacement intérieur */
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    border-radius: 8px; /* Coins arrondis */
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0d6efd;
+    color: #ffffff;
+    padding: 0 20px;
+    height: 60px; /* Hauteur de la topbar */
+    position: fixed; /* Toujours visible en haut */
+    top: 0;
+    left: 250px; /* Commence après la sidebar */
+    width: calc(100% - 250px); /* Largeur totale moins la largeur de la sidebar */
+    z-index: 10; /* Superposition au-dessus d'autres éléments */
+}
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --text-color: #ecf0f1;
+    --hover-color: #2980b9;
+    --transition: all 0.3s ease;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f6fa;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    padding: 0;
+    max-width: 100%;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background: var(--primary-color);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: fixed;
+    transition: var(--transition);
+}
+
+.sidebar h2 {
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.sidebar a i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.sidebar a:hover {
+    background: var(--hover-color);
+    transform: translateX(5px);
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 2rem;
+    background: #f8f9fa;
+}
+
+/* Topbar Styles */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-section h5{
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 0;
+}
+
+ .profile-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(206, 23, 23);
+        }
+
+.profile-image i {
+    font-size: 1.5rem;
+}
+
+.btn-action {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.btn-action:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
+/* Page Content Styles */
+.page-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.page-content h1 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70px;
+        padding: 1rem 0.5rem;
+    }
+
+    .sidebar h2, .sidebar a span {
+        display: none;
+    }
+
+    .sidebar a {
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .sidebar a i {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    .main-content {
+        margin-left: 70px;
+    }
+}

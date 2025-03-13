@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications Académiques</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="asset/css/sytlevisiteur.css">
+    <style>
+        .carousel-item {
+            transition: transform 0.6s ease-in-out;
+        }
+        
+        .carousel-item img {
+            height: 400px;
+            object-fit: cover;
+            animation: slideIn 0.8s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .carousel-inner {
+            overflow: hidden;
+        }
+        
+        /* Styles pour le filtrage des publications */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            margin: 2rem auto;
+        }
+
+        .publication-card {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Style pour les boutons de filtre */
+        .filter-buttons .btn {
+            transition: all 0.3s ease;
+            margin: 0 5px;
+        }
+
+        .filter-buttons .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .filter-buttons .btn.active {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand">Publications Académiques</a>
+            <button class="btn btn-outline-light" onclick="window.location.href='login.html'">
+                <i class="fas fa-user me-2"></i>Connexion
+            </button>
+        </div>
+    </nav>
+
+    <div id="carouselExampleIndicators" class="carousel slide hero-carousel" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="asset/image/recherche.jpg" alt="Recherche académique" class="d-block w-100">
+            </div>
+            <div class="carousel-item">
+                <img src="asset/image/recherche2.jpg" alt="Publications" class="d-block w-100">
+            </div>
+            <div class="carousel-item">
+                <img src="asset/image/recherche3.jpg" alt="Université" class="d-block w-100">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="search-section">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="input-group">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Rechercher des publications...">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-buttons text-center">
+            <button class="btn btn-primary active" data-filter="all">Toutes</button>
+            <button class="btn btn-outline-primary" data-filter="recent">Récentes</button>
+          
+        </div>
+
+        <div class="row mt-4" id="publicationsContainer"></div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Rue de la  presidence</p>
+                        <p><i class="fas fa-phone"></i> +224 612349177</p>
+                        <p><i class="fas fa-envelope"></i> contact@universite.fr</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liens Rapides</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">À propos</a></li>
+                        <li><a href="#" class="text-white">Nos chercheurs</a></li>
+                        <li><a href="#" class="text-white">Publications</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h5>Suivez-nous</h5>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-researchgate"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = new bootstrap.Carousel(document.getElementById('carouselExampleIndicators'), {
+                interval: 3000,
+                ride: true
+            });
+
+            const publicationsContainer = document.getElementById('publicationsContainer');
+            
+            if (!publicationsContainer) {
+                console.error("L'élément 'publicationsContainer' n'a pas été trouvé dans le DOM");
+                return;
+            }
+
+            // Charger les publications
+            loadPublications();
+        });
+
+        // Fonction pour charger les publications
+        async function loadPublications() {
+            try {
+                const response = await fetch("http://localhost:8090/validevisiteur/all");
+                if (!response.ok) {
+                    throw new Error('Erreur réseau');
+                }
+                const publications = await response.json();
+                displayPublications(publications);
+            } catch (error) {
+                console.error("Erreur:", error);
+                showError("Erreur lors du chargement des publications. Veuillez réessayer plus tard.");
+            }
+        }
+
+        // Fonction pour afficher les publications
+        function displayPublications(publications) {
+            const publicationsContainer = document.getElementById('publicationsContainer');
+            // Ajout d'une animation de chargement initiale
+            publicationsContainer.style.opacity = '0';
+            let publicationsHTML = '';
+            
+            publications.forEach(pub => {
+                const enseignantNom = pub.utilisateur && pub.utilisateur.enseignantChercheur 
+                    ? pub.utilisateur.enseignantChercheur.nom 
+                    : "Nom inconnu";
+
+                publicationsHTML += createPublicationCard(pub, enseignantNom);
+            });
+
+            publicationsContainer.innerHTML = publicationsHTML;
+            // Animation de fade in
+            setTimeout(() => {
+                publicationsContainer.style.opacity = '1';
+                publicationsContainer.style.transition = 'opacity 0.3s ease-in-out';
+            }, 50);
+        }
+
+        // Fonction pour créer une carte de publication
+        function createPublicationCard(pub, enseignantNom) {
+            return `
+                <div class="col-md-4 mb-4">
+                    <div class="publication-card card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">${pub.type || 'Type non spécifié'}</h5>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2">${pub.titre || 'Sans titre'}</h6>
+                            <p class="text-muted small">Par ${enseignantNom}</p>
+                            <p class="card-text">${pub.resume || 'Aucun résumé disponible'}</p>
+                            
+                            <div class="publication-actions">
+                                <div class="action-buttons">
+                                    <a href="${pub.fichierPDF}" 
+                                       class="btn btn-read" 
+                                       target="_blank">
+                                        <i class="fas fa-book-reader me-2"></i>Lire
+                                    </a>
+                                    <button class="btn btn-download" 
+                                            onclick="downloadFile(${pub.idPublication})">
+                                        <i class="fas fa-download me-2"></i>Télécharger
+                                    </button>
+                                </div>
+
+                                <button class="comment-button" 
+                                        onclick="toggleComments(${pub.idPublication})">
+                                    <i class="fas fa-comment me-2"></i>
+                                    Commentaires
+                                    <span id="comments-count-${pub.idPublication}" 
+                                          class="badge bg-secondary ms-2">0</span>
+                                </button>
+                                
+                                <div class="comment-section" id="comments-${pub.idPublication}">
+                                    <div class="comments-list" id="comments-list-${pub.idPublication}">
+                                    </div>
+                                    
+                                    <div class="comment-input-group">
+                                        <input type="text" 
+                                               class="comment-input"
+                                               id="comment-input-${pub.idPublication}"
+                                               placeholder="Ajouter un commentaire...">
+                                        <button class="send-button"
+                                                onclick="addComment(${pub.idPublication})">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Nouvelle fonction de filtrage des publications
+        async function filterPublications(filter) {
+            try {
+                // Afficher un indicateur de chargement
+                const publicationsContainer = document.getElementById('publicationsContainer');
+                publicationsContainer.innerHTML = `
+                    <div class="col-12 text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Chargement...</span>
+                        </div>
+                    </div>
+                `;
+
+                let publications;
+                
+                if (filter === 'all') {
+                    const response = await fetch("http://localhost:8090/validevisiteur/all");
+                    if (!response.ok) throw new Error('Erreur réseau');
+                    publications = await response.json();
+                } else if (filter === 'recent') {
+                    const response = await fetch("http://localhost:8090/validevisiteur/all");
+                    if (!response.ok) throw new Error('Erreur réseau');
+                    publications = await response.json();
+                    publications.sort((a, b) => new Date(b.datePublication) - new Date(a.datePublication));
+                } else {
+                    const response = await fetch(`http://localhost:8090/type/all?type=${filter}`);
+                    if (!response.ok) throw new Error('Erreur réseau');
+                    publications = await response.json();
+                }
+
+                // Ajouter une animation de transition
+                publicationsContainer.style.opacity = '0';
+                
+                setTimeout(() => {
+                    displayPublications(publications);
+                    publicationsContainer.style.opacity = '1';
+                    publicationsContainer.style.transition = 'opacity 0.3s ease-in-out';
+                }, 300);
+
+            } catch (error) {
+                console.error("Erreur:", error);
+                showError("Erreur lors du filtrage des publications. Veuillez réessayer plus tard.");
+            }
+        }
+
+        // Autres fonctions existantes (toggleComments, loadComments, etc.)
+        function toggleComments(publicationId) {
+            const commentSection = document.getElementById(`comments-${publicationId}`);
+            const isActive = commentSection.classList.toggle('active');
+            
+            if (isActive) {
+                loadComments(publicationId);
+            }
+        }
+
+        async function loadComments(publicationId) {
+            try {
+                const response = await fetch(`http://localhost:8090/publications/comments/${publicationId}`);
+                if (response.ok) {
+                    const comments = await response.json();
+                    displayComments(publicationId, comments);
+                } else {
+                    throw new Error('Erreur lors du chargement des commentaires');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showCommentsError(publicationId);
+            }
+        }
+
+        function displayComments(publicationId, comments) {
+            const commentsList = document.getElementById(`comments-list-${publicationId}`);
+            
+            if (!comments || comments.length === 0) {
+                commentsList.innerHTML = '<p class="text-muted">Aucun commentaire pour le moment.</p>';
+                return;
+            }
+
+            commentsList.innerHTML = comments.map(comment => `
+                <div class="comment-item">
+                    <span class="comment-author">${comment.nomVisiteur}</span>
+                    <p class="mb-0">${comment.content}</p>
+                    <small class="comment-date">${new Date(comment.date).toLocaleDateString()}</small>
+                </div>
+            `).join('');
+        }
+
+        async function addComment(publicationId) {
+            const input = document.getElementById(`comment-input-${publicationId}`);
+            const content = input.value.trim();
+            const nomVisiteur = prompt("Veuillez entrer votre nom :", "");
+            
+            if (!nomVisiteur || nomVisiteur.trim() === '') {
+                alert('Le nom est requis pour commenter');
+                return;
+            }
+
+            if (!content) {
+                alert('Veuillez entrer un commentaire');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8090/publications/comments/${publicationId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nomVisiteur: nomVisiteur.trim(),
+                        content: content
+                    })
+                });
+
+                if (response.ok) {
+                    input.value = '';
+                    await loadComments(publicationId);
+                    showSuccessMessage(publicationId);
+                } else {
+                    throw new Error('Erreur lors de l\'ajout du commentaire');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de l\'ajout du commentaire');
+            }
+        }
+
+        function showSuccessMessage(publicationId) {
+            const commentsList = document.getElementById(`comments-list-${publicationId}`);
+            const successMessage = document.createElement('div');
+            successMessage.className = 'alert alert-success mb-2';
+            successMessage.textContent = 'Commentaire ajouté avec succès!';
+            commentsList.insertBefore(successMessage, commentsList.firstChild);
+            
+            setTimeout(() => successMessage.remove(), 3000);
+        }
+
+        function showCommentsError(publicationId) {
+            const commentsList = document.getElementById(`comments-list-${publicationId}`);
+            commentsList.innerHTML = `
+                <div class="alert alert-danger">
+                    Erreur lors du chargement des commentaires.
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            const publicationsContainer = document.getElementById('publicationsContainer');
+            publicationsContainer.innerHTML = `
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        ${message}
+                    </div>
+                </div>
+            `;
+        }
+
+        function downloadFile(idPublication) {
+            if (!idPublication) {
+                console.error('ID de publication non défini');
+                return;
+            }
+
+            fetch(`http://localhost:8090/file/${idPublication}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur lors du téléchargement');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `publication-${idPublication}.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors du téléchargement du fichier');
+                });
+        }
+
+        // Gestionnaires d'événements pour la recherche
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            filterBySearch(searchTerm);
+        });
+
+        function filterBySearch(searchTerm) {
+            const publications = document.querySelectorAll('.publication-card');
+            
+            publications.forEach(card => {
+                const title = card.querySelector('.card-subtitle').textContent.toLowerCase();
+                const content = card.querySelector('.card-text').textContent.toLowerCase();
+                const type = card.querySelector('.card-title').textContent.toLowerCase();
+                
+                const isVisible = title.includes(searchTerm) || 
+                                content.includes(searchTerm) || 
+                                type.includes(searchTerm);
+                
+                card.closest('.col-md-4').style.display = isVisible ? '' : 'none';
+            });
+        }
+
+        // Gestionnaires d'événements pour les filtres
+        document.querySelectorAll('.filter-buttons .btn').forEach(button => {
+            button.addEventListener('click', function() {
+                updateFilterButtons(this);
+                filterPublications(this.dataset.filter);
+            });
+        });
+
+        function updateFilterButtons(activeButton) {
+            document.querySelectorAll('.filter-buttons .btn').forEach(btn => {
+                btn.classList.remove('active', 'btn-primary');
+                btn.classList.add('btn-outline-primary');
+            });
+            
+            activeButton.classList.add('active', 'btn-primary');
+            activeButton.classList.remove('btn-outline-primary');
+        }
+    </script>
+</body>
+</html>

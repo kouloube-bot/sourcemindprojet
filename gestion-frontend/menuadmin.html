@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'Accueil Admin</title>
+    <link rel="stylesheet" href="asset/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+     .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            margin-top: 5px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .stat-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        .stats-container {
+    margin-bottom: 2rem;
+}
+
+.stats-container .card {
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.stats-container .card:hover {
+    transform: translateY(-5px);
+}
+
+.stats-container .card-text {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.stats-container .card-title {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .stats-container .col-md-3 {
+        margin-bottom: 1rem;
+    }
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar (Menu Vertical à gauche) -->
+        <div class="sidebar">
+                <a href="menuderoulante.html"><i class="bi bi-file-earmark-text"></i>Publications</a>
+               <a href="listeRoles.html"><i class="bi bi-gear"></i>Gestion des Rôles</a>
+                <a href="listeutilisateur.html"><i class="bi bi-people"></i>Gestion des Utilisateurs</a>
+                <a href="listeDepartement.html" id="menu-gestion-departements"><i class="bi bi-building"></i>Gestion des Départements</a>
+                <a href="listeChercheur.html"><i class="bi bi-people"></i>Gestion des Enseignants</a>
+                <a href="parametres.html"><i class="bi bi-gear"></i>Paramètres</a>
+               
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="topbar">
+                <div class="profile-section">
+                    <div class="profile-image">
+                        <i class="bi bi-person"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0"></h5>
+                        <small class="text-muted">Administrateur</small>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn-action">
+                        <div class="mt-auto text-center">
+                        
+                            <a href="#" id="logout-link"  class="text-danger"><i class="bi bi-box-arrow-left">
+                            </i> Déconnexion</a>
+                            <script>
+                                // Déconnexion
+                                document.getElementById("logout-link").addEventListener("click", function () {
+                                    localStorage.removeItem("token"); // Supprimer le token
+                                    localStorage.removeItem("role");  // Supprimer le rôle
+                                    window.location.href = "login.html"; // Rediriger vers la page de connexion
+                                });
+                            </script>
+                            </div>
+                  
+                </div>
+            </div>
+
+                    
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <h3>Publications Validées</h3>
+                            <div class="number"><strong></strong></div>
+                            <p> publications approuvées récemment.</p>
+                            
+                        </div>
+                        <div class="stat-card">
+                            <h3>Publication</h3>
+                            <div class="number"><strong></strong></div>
+                            <p> Publication au total</p>
+                            
+                        </div>
+                        <div class="stat-card">
+                            <h3>Publications en Révision</h3>
+                            <div class="number"><strong></strong></div>
+                            <p> publications en cours de révision.</p>
+                            
+                        </div>
+                        <div class="stat-card">
+                            <h3>Publications Soumise</h3>
+                            <div class="number"><strong></strong></div>
+                            <p> publications soumise.</p>
+                            
+                        </div> 
+                    </div>
+                </div> 
+            </div>
+    </div>
+
+    <script src="asset/js/script.js" defer></script>
+    <script src="asset/js/appChercheur.js" defer></script>
+</body>
+</html>

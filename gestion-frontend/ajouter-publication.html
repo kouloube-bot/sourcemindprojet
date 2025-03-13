@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Publications</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* CSS pour les styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        #openModalBtn {
+            background-color: #0d6efd;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 20px;
+        }
+
+        #openModalBtn:hover {
+            background-color: #0b5ed7;
+        }
+
+        /* Style du modal */
+        #addPublicationModal, #editPublicationModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        #addPublicationForm {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        #addPublicationForm input[type="text"], #addPublicationForm textarea, #addPublicationForm select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        #addPublicationForm button[type="submit"] {
+            background-color: #0d6efd;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .tab-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-tabs {
+            border: none;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            color: #666;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-tabs .nav-link.active {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .content-section iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+
+        .btn-action {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            background: var(--accent-color);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .stat-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .sidebar .bi {
+            font-size: 1.2rem;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin: 0.2rem 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background: var(--accent-color);
+            color: white;
+            transform: translateX(5px);
+        }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: var(--sidebar-width);
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --sidebar-width: 280px;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h4 class="text-center mb-4">Enseignant chercheur</h4>
+        <div class="nav flex-column">
+            <a href="menuChercheur.html" class="nav-link active">
+                <i class="bi bi-house"></i>
+                Dashboard
+            </a>
+            <a href="" class="nav-link">
+                <i class="bi bi-file-earmark-text"></i>
+                Publications
+            </a>
+            <a href="#" class="nav-link">
+                <i class="bi bi-graph-up"></i>
+                Statistiques
+            </a>
+            <a href="#" class="nav-link">
+                <i class="bi bi-gear"></i>
+                Paramètres
+            </a>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="topbar">
+            <div class="profile-section">
+                <div class="profile-image">
+                    <i class="bi bi-person"></i>
+                </div>
+                <div>
+                    <h5 class="mb-0"></h5>
+                    <small class="text-muted">Enseignant Chercheur</small>
+                </div>
+            </div>
+            <div class="actions">
+                    <button class="btn-action">
+                        <div class="mt-auto text-center">
+                        
+                            <a href="#" id="logout-link"  class="text-danger"><i class="bi bi-box-arrow-left">
+                            </i> Déconnexion</a>
+                            <script>
+                                // Déconnexion
+                                document.getElementById("logout-link").addEventListener("click", function () {
+                                    localStorage.removeItem("token"); // Supprimer le token
+                                    localStorage.removeItem("role");  // Supprimer le rôle
+                                    window.location.href = "login.html"; // Rediriger vers la page de connexion
+                                });
+                            </script>
+                            </div>
+                  
+                </div>
+        </div>
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-button active" data-status="soumises"><i class="bi-hourglass"></i>Publications Soumises</button>
+                <button class="tab-button" data-status="validees"><i class="bi-check-circle"></i>Publications Validées</button>
+                <button class="tab-button" data-status="revision"><i class="bi-pencil"></i>En Révision</button>
+
+            </div>
+        </div>
+    <!-- Bouton pour ouvrir le modal -->
+    <button id="openModalBtn">Ajouter une publication</button>
+
+    <!-- Modal pour ajouter une publication -->
+    <div id="addPublicationModal">
+        <div class="modal-content">
+            <button class="close-btn">×</button>
+            <h2>Ajouter une nouvelle publication</h2>
+            <form id="addPublicationForm">
+                <div>
+                    <label for="titre">Titre :</label>
+                    <input type="text" id="titre" name="titre" required>
+                </div>
+                <div>
+                    <label for="resume">Résumé :</label>
+                    <textarea id="resume" name="resume" required></textarea>
+                </div>
+                <div>
+                    <label for="type">Type :</label>
+                    <select id="type" name="type" required>
+                        <option value="">Sélectionnez un type</option>
+                        <option value="ARTICLE">Article</option>
+                        <option value="CONFERENCE">Conférence</option>
+                        <option value="THESE">Thèse</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="file">Document PDF :</label>
+                    <input type="file" id="file" name="file" accept="application/pdf">
+                </div>
+                <button type="submit">Soumettre</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tableau des publications -->
+    <table>
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Résumé</th>
+                <th>Document</th>
+                <th>Statut</th>
+                <th>Type</th>
+                <th id="actionsHeader" style="display: none;">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="publicationList">
+           
+        </tbody>
+    </table>
+
+    <!-- Modal pour modifier une publication -->
+    <div id="editPublicationModal">
+        <div class="modal-content">
+            <button class="close-btn">&times;</button>
+            <h2>Modifier la publication</h2>
+            <form id="editPublicationForm">
+                
+                <input type="hidden" id="editPublicationId" name="id">
+                <div class="form-group">
+                    <label for="editTitle">Titre</label>
+                    <input type="text" id="editTitle" name="titre" required>
+                </div>
+                <div class="form-group">
+                    <label for="editSummary">Résumé</label>
+                    <textarea id="editSummary" name="resume" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editType">Type</label>
+                    <select id="editType" name="type" required>
+                        <option value="">Sélectionnez un type</option>
+                        <option value="ARTICLE">Article</option>
+                        <option value="CONFERENCE">Conférence</option>
+                        <option value="THESE">Thèse</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editFile">Document PDF</label>
+                    <input type="file" id="editFile" name="file" accept="application/pdf">
+                </div>
+                <button type="submit">Enregistrer les modifications</button>
+            </form>
+        </div>
+    </div>
+    <script src="asset/js/appChercheur.js" defer></script>
+</body>
+</html>
