@@ -1,6 +1,6 @@
 package com.publi.gestionpub.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,16 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.publi.gestionpub.entité.AppRoles;
+import com.publi.gestionpub.Dto.EnseignantChercheurDto;
 import com.publi.gestionpub.entité.EnseignantChercheur;
-import com.publi.gestionpub.entité.AppUser;
 import com.publi.gestionpub.repository.AppRolesRepository;
 import com.publi.gestionpub.repository.EnseignantChercheurRepository;
 import com.publi.gestionpub.repository.UserRepository;
 import com.publi.gestionpub.service.EnseignantChercheurService;
 
 
-
+@CrossOrigin(origins = "*")
 @RestController
 public class EnseignantChercheurController {
 	
@@ -42,23 +42,8 @@ public class EnseignantChercheurController {
 	private  EnseignantChercheurService  enseignantChercheurService;
 	
 	@PostMapping("/chercheuradd" )
-	public   EnseignantChercheur ajouterformateur(@RequestBody  EnseignantChercheur  enseignantChercheur) {
-		 EnseignantChercheur  enseignantChercheurs  = this.enseignantChercheurRepository.findByUsername(enseignantChercheur.getUsername());
-		if(enseignantChercheurs!=null)
-			throw new RuntimeException("ce nom existe");
-		String ashpw=passwordEncoder.encode(enseignantChercheur.getPassword());
-		enseignantChercheur.setPassword(ashpw);
-		List<AppRoles> roles = new ArrayList<AppRoles>();
-		AppRoles app = this.appRolesRepository.findByRoleName("CHERCHEUR");
-		System.out.println(" ****************** " + app.getRoleName() );
-		roles.add(app);
-		enseignantChercheur.setRoles(roles);
-		 EnseignantChercheur savedchercheur= this.enseignantChercheurRepository.save(enseignantChercheur);
-		if(savedchercheur!=null) {
-			AppUser appUser = new AppUser(null,savedchercheur.getUsername(),savedchercheur.getEmail(),savedchercheur.getPassword(),roles);
-			userRepository.save(appUser);
-		}
-		return savedchercheur;
+	public   EnseignantChercheurDto ajouterformateur(@RequestBody  EnseignantChercheurDto  enseignantChercheur) {
+		return enseignantChercheurService.addEnseignantChercheur(enseignantChercheur);
 	}
 	@RequestMapping(value = "/chercheur/all", method=RequestMethod.GET)
 	public List<EnseignantChercheur> afficherTousFormateurcontrole(){
@@ -85,16 +70,11 @@ public class EnseignantChercheurController {
 		EnseignantChercheur enseignantChercheur=enseignantChercheurService.findByUsername(username);
 		return new ResponseEntity<EnseignantChercheur>(enseignantChercheur, HttpStatus.OK);
 	}
-	@RequestMapping(value="/chercheur/edit/{id}" ,method=RequestMethod.PUT)
-	public void modifieruser(@PathVariable("id") Long id ,@RequestBody EnseignantChercheur enseignantChercheur) {
-		EnseignantChercheur enseignantChercheurs=enseignantChercheurService.findById(id);
-		String hashpw=passwordEncoder.encode(enseignantChercheur.getPassword());
-		enseignantChercheurs.setPassword(hashpw);
-		enseignantChercheurs.setUsername(enseignantChercheur.getUsername());
-		enseignantChercheurs.setEmail(enseignantChercheur.getEmail());
-		enseignantChercheurs.setRoles(enseignantChercheur.getRoles());
-		enseignantChercheurService.modifierenseignantChercheur(id, enseignantChercheurs);
-	}
+	@GetMapping("/enseignat/all")
+    public List<EnseignantChercheur> getAllChercheurs() {
+        return enseignantChercheurService.aficherenseignantChercheurtous();
+    }
+	
 	
 
 }

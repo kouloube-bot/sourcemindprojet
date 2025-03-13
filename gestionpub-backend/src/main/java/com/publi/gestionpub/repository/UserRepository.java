@@ -11,11 +11,10 @@ import org.springframework.data.repository.query.Param;
 
 
 import com.publi.gestionpub.entité.AppUser;
+import com.publi.gestionpub.entité.Publication;
 
 
 public interface UserRepository extends JpaRepository<AppUser, Long> {
-	public AppUser findByUsername(String username);
-	
 	@Query("SELECT COUNT(*) FROM AppUser")
 	public int nbruser();
 	@Query("select u from AppUser u where u.email=:x")
@@ -24,10 +23,12 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
     public List<AppUser> getByUserOnLigne();
     @Query("select u from AppUser u")
     List<AppUser> findAll();
+    @Query("SELECT u FROM AppUser u JOIN FETCH u.roles WHERE u.email = :email")
+    Optional<AppUser> findByEmailWithRoles(@Param("email") String email);
+    @Query("SELECT u FROM AppUser u JOIN u.roles r WHERE r.roleName = 'REVISEUR'")
+    List<AppUser> findUsersWithReviseurRole();
+ 
     
-    
-    @Query("select p from Utilisateur p where p.supprimer is false and lower(p.email) like concat('%', :key,'%')")
-    Page<AppUser> findAllByKey(Pageable pageable, @Param("key") String key);
     
 
 }

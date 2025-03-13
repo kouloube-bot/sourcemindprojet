@@ -2,7 +2,10 @@ package com.publi.gestionpub.entité;
 
 import javax.persistence.*;
 
+import com.publi.gestionpub.enume.PublicationStatus;
+
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Publication {
@@ -13,18 +16,21 @@ public class Publication {
     private String resume;
     private String fichierPDF;
     private Date dateSoumission;
-    private String statut; // "soumise", "en révision", "validée"
+    @Enumerated(EnumType.STRING)
+    private PublicationStatus status = PublicationStatus.SOUMISE;// "soumise", "en révision", "validée"
     private String type;
+    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Revision> revisions;
     @ManyToOne
     @JoinColumn(name = "id_utilisateur")
     private AppUser utilisateur;
     public Publication() {}
-    public Publication(String titre, String resume, String fichierPDF, Date dateSoumission, String statut, String type, AppUser utilisateur) {
+    public Publication(String titre, String resume, String fichierPDF, Date dateSoumission, PublicationStatus status, String type, AppUser utilisateur) {
         this.titre = titre;
         this.resume = resume;
         this.fichierPDF = fichierPDF;
         this.dateSoumission = dateSoumission;
-        this.statut = statut;
+        this.status = status;
         this.type = type;
         this.utilisateur = utilisateur;
 
@@ -59,11 +65,11 @@ public class Publication {
     public void setDateSoumission(Date dateSoumission) {
         this.dateSoumission = dateSoumission;
     }
-    public String getStatut() {
-        return statut;
+    public PublicationStatus getStatus() {
+        return status;
     }
-    public void setStatut(String statut) {
-        this.statut = statut;
+    public void setStatus(PublicationStatus status) {
+        this.status = status;
     }
     public String getType() {
         return type;
@@ -77,5 +83,6 @@ public class Publication {
     public void setUtilisateur(AppUser utilisateur) {
         this.utilisateur = utilisateur;
     }
+	
 
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.publi.gestionpub.entité.EnseignantChercheur;
 
 public interface EnseignantChercheurRepository extends JpaRepository<EnseignantChercheur, Long>{
-	public EnseignantChercheur findByUsername(String username);
+	
 	public EnseignantChercheur findByEmail(String Email);
 	@Query("SELECT COUNT(*) FROM EnseignantChercheur")
 	public int nbrenseignantChercheur();

@@ -9,16 +9,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.publi.gestionpub.entité.AppUser;
+import com.publi.gestionpub.mapper.Mapper;
 import com.publi.gestionpub.repository.UserRepository;
 
-import dgd.dis.symud.mapper.Mapper;
-
-
-
-
-
-
- 
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {

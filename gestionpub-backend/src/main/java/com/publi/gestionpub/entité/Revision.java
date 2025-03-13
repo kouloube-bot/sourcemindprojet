@@ -9,20 +9,32 @@ public class Revision {
     private Long idRevision;
     private String commentaires;
     private int note;// Note de 1 à 5
-    @ManyToOne
+    private boolean effectuee;
+    public boolean isEffectuee() {
+		return effectuee;
+	}
+	public void setEffectuee(boolean effectuee) {
+		this.effectuee = effectuee;
+	}
+	@ManyToOne
     @JoinColumn(name = "id_publication")
     private Publication publication;
     @ManyToOne
     @JoinColumn(name = "id_utilisateur")
     private AppUser utilisateur;
     public Revision() {}
-    public Revision(String commentaires, int note, Publication publication, AppUser utilisateur) {
-        this.commentaires = commentaires;
-        this.note = note;
-        this.publication = publication;
-        this.utilisateur = utilisateur;
-    }
-    public Long getIdRevision() {
+    
+    public Revision(Long idRevision, String commentaires, int note, boolean effectuee, Publication publication,
+			AppUser utilisateur) {
+		super();
+		this.idRevision = idRevision;
+		this.commentaires = commentaires;
+		this.note = note;
+		this.effectuee = effectuee;
+		this.publication = publication;
+		this.utilisateur = utilisateur;
+	}
+	public Long getIdRevision() {
         return idRevision;
     }
     public void setIdRevision(Long idRevision) {

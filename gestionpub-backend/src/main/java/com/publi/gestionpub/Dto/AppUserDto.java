@@ -16,7 +16,8 @@ public class AppUserDto  {
     private String email;
     private String password;
     private Collection<AppRoles> roles = new ArrayList<AppRoles>();
-    
+    private String username;
+    private Long idEnseignantChercheur;
 	public String getPassword() {
         return password;
     }
@@ -49,22 +50,22 @@ public class AppUserDto  {
 		this.roles = roles;
 	}
 
-    
+	public String getUsername() {
+		return username;
+	}
 
-    
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Long getIdEnseignantChercheur() {
+		return idEnseignantChercheur;
+	}
+
+	public void setIdEnseignantChercheur(Long idEnseignantChercheur) {
+		this.idEnseignantChercheur = idEnseignantChercheur;
+	}
 
    
-
-	
-
-
-	
-		
-
-	
-
-	
-
-	
 	
 }

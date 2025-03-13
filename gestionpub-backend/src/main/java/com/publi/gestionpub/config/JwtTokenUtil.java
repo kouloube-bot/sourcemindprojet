@@ -14,6 +14,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.publi.gestionpub.service.UtilisateurService;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -77,7 +79,7 @@ public class JwtTokenUtil implements Serializable {
 			}
 		}
 		claims.put(Claims.AUDIENCE, autorities);
-		claims.put(Claims.ID, this.utilisateurService.getUtilisateurByEmail(userDetails.getUsername()).getUuid());
+		claims.put(Claims.ID, this.utilisateurService.getUtilisateurByEmail(userDetails.getUsername()).getId());
 		//claims.put(Claims.ISSUER, this.utilisateurService.getUtilisateurByEmail(userDetails.getUsername()));
 		return doGenerateToken(claims, userDetails.getUsername());
 	}

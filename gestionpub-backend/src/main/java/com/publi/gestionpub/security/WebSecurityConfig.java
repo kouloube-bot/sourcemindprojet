@@ -6,7 +6,6 @@ package com.publi.gestionpub.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -61,14 +60,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 		httpSecurity.csrf().disable()
 		
-		.authorizeRequests().antMatchers(HttpMethod.POST,"/authenticate","/signup", "/login","/chercheuradd", "/add").permitAll()
+		.authorizeRequests().antMatchers("/authenticate/**","/v3/api-docs/**","/api/**","/chercheuradd/**","/swagger-ui/*","/users/add/**","/type/all/**","/api/publications/download/**","/validevisiteur/all/**","/file/{idPublication}/**","/departements/**","/publications/comments/{publicationId}/**").permitAll();
+		httpSecurity.authorizeRequests().antMatchers("/file/***").permitAll()
+		.antMatchers("/menuadmin.html").hasRole("ADMIN")
+        .antMatchers("/menuChercheur.html").hasRole("CHERCHEUR")
+        .antMatchers("/menuReviseur.html").hasRole("REVISEUR")
 		.anyRequest().authenticated()
 		.and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-httpSecurity.cors();
-// Add a filter to va
-// Add a filter to validate the tokens with every request
-httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		httpSecurity.cors();
+		//Add a filter to validate the tokens with every request
+		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 		
 		
 	}
